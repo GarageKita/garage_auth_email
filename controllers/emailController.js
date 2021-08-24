@@ -2,7 +2,7 @@
 
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
-const url = 'http://localhost:8888'
+const url = 'https://garage-kita-3rd.herokuapp.com'
 const { v1: uuidv1} = require('uuid');
 const {User} = require('../models/index.js');
 
