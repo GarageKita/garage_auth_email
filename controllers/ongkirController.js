@@ -41,9 +41,9 @@ class OngkirController{
                 query = '?' + idProvince
             }
 
-
+            console.log(url + '/city' + query)
             let headers = {key: process.env.RAJA_ONGKIR_API}
-
+            
             axios({
                 method: 'get',
                 url: url + '/city' + query,
@@ -51,6 +51,7 @@ class OngkirController{
                 headers: headers
               })
             .then(({data, status}) => {
+                // console.log(data.rajaongkir.results)
                 res.status(status).json(data.rajaongkir.results)
             }).catch(({response}) => {
                 throw ({
