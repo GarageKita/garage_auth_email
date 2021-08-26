@@ -25,6 +25,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "google-auth-library": "^7.6.2",
     "moment": "^2.29.1",
     "nodemailer": "^6.6.3",
     "nodemailer-smtp-transport": "^2.7.4",

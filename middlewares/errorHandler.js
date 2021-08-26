@@ -6,7 +6,11 @@ function errorHandler(err, req, res, next){
     }
 
     if (err.name == 'EmailSendError' || err.name == 'NotFound'){
-        return res.status(401).json({success: false, message: err.message})
+        return res.status(400).json({success: false, message: err.message})
+    }
+
+    if (err.name == 'RajaOngkirError') {
+        return res.status(err.status).json({success: false, message: err.message})
     }
 
     if (err.message == undefined){

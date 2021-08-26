@@ -13,7 +13,7 @@ class EmailController{
         let uniqueCode = uuidv1();
         let emailText = `
         
-        Thanks for signing up with Heroku! You must follow this link to activate your account:
+        Thanks for signing up with Garage Kita! You must follow this link to activate your account:
                 
         ${url}/email/activation/?code=${uniqueCode}
                 
