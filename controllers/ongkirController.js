@@ -14,7 +14,7 @@ class OngkirController{
                 headers: headers
               })
             .then(({data, status}) => {
-                res.status(status).json(data)
+                res.status(status).json(data.rajaongkir.results)
             }).catch(({response}) => {
                 throw ({
                     name: "RajaOngkirError",
@@ -51,7 +51,7 @@ class OngkirController{
                 headers: headers
               })
             .then(({data, status}) => {
-                res.status(status).json(data)
+                res.status(status).json(data.rajaongkir.results)
             }).catch(({response}) => {
                 throw ({
                     name: "RajaOngkirError",
@@ -75,7 +75,7 @@ class OngkirController{
                 headers: headers
               })
             .then(({data, status}) => {
-                res.status(status).json(data)
+                res.status(status).json(data.rajaongkir)
             }).catch(({response}) => {
                 throw ({
                     name: "RajaOngkirError",
