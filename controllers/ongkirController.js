@@ -30,7 +30,7 @@ class OngkirController{
     static async getCity (req, res, next) {
         try {
             let id = (req.query.id)?'id='+req.query.id:''
-            let idProvince = (req.query.province)?'province'+req.query.province:''
+            let idProvince = (req.query.province)?'province='+req.query.province:''
             let query = ""
 
             if (id != '' && idProvince != ''){
