@@ -11,6 +11,7 @@ class EmailController{
         console.log('params', req.params.email)
         let emailKirim = req.params.email
         let uniqueCode = uuidv1();
+        let userId;
         let emailText = `
         
         Thanks for signing up with Garage Kita! You must follow this link to activate your account:
@@ -32,6 +33,8 @@ class EmailController{
                     message: `Data with email ${email} Not Found`
                 })
             } else {
+                userId = result.id
+
                 let transporter = nodemailer.createTransport(smtpTransport({
                     service: 'gmail',
                     host: 'smtp.gmail.com',
@@ -66,7 +69,7 @@ class EmailController{
 
             }
         }).then(result => {
-            res.status(201).json({success: true, message: 'Email sent'})
+            res.status(201).json({success: true, message: {id: userId, uniqueCode: uniqueCode, message: 'Email sent'}})
         }).catch(err => next(err))
 
     }
