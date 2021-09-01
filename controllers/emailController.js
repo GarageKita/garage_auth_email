@@ -59,11 +59,15 @@ class EmailController{
                         })
                     } else {
                         // console.log('Email send: ' + info.response)
-                        return User.update({uniqueCode: uniqueCode}, {
-                            where: {
-                                email: emailKirim
-                            }
-                        })
+                        if (result.uniqueCode === null) {
+                            return User.update({uniqueCode: uniqueCode}, {
+                                where: {
+                                    email: emailKirim
+                                }
+                            })
+                        } else {
+                            uniqueCode = result.uniqueCode
+                        }
                     }
                });
 
@@ -77,7 +81,7 @@ class EmailController{
     static activatedAccount (req, res, next) {
         let activationCode = req.query.code;
 
-        console.log(activationCode)
+        console.log(activationCode, process.env.NODE_ENV)
 
         User.update({isActivated: true}, {
             where: {
@@ -86,12 +90,14 @@ class EmailController{
             returning: true
         })
         .then(result => {
+            console.log('xxxxxxxxx')
             if (result[0] === 0){
                 throw ({
                     name: "NotFound",
                     message: `Data Not Found`
                 })
             } else {
+                console.log('zzzzzz')
                 res.status(200).json({success: true, message: result[1][0]})
             }
         })
