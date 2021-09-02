@@ -1,34 +1,40 @@
-const {user} = require('../models/index.js')
+const {User} = require('../models/index.js');
 const {OAuth2Client} = require('google-auth-library')
 const axios = require('axios')
+const {jwtEncrypt} = require('../helpers/jwt')
 
 class oauthController{
     static loginGoogle(req, res, next){
         console.log("token ", req.body)
-        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+        // const clientGoogle = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
         const {token} = req.body;
         let emailUser = "";
+        let userName = ""
 
         client.verifyIdToken({
             idToken: token,
             audience: process.env.GOOGLE_CLIENT_ID
-        })
-        .then(ticket => {
+        }).then(ticket => {
             const payload = ticket.getPayload();
-            const {email} = payload
+            const {email, givenName} = payload
             emailUser = email;
+            userName = givenName
 
-            console.log("ticket", req.body)
+            console.log("ticket", payload)
 
-            return user.findOne({
+            return User.findOne({
                 where: {email: emailUser}
             })
         }).then(result => {
             if (!result) {
                 console.log("create user")
-                return user.create({
+                return User.create({
                     email: emailUser,
-                    password: String(Math.random()) + String(Math.random())
+                    password: String(Math.random()) + String(Math.random()),
+                    username: userName,
+                    isActivated: true,
+                    uniqueCode: ""
                 })
             } else {
                 console.log("DONE user")
@@ -40,12 +46,15 @@ class oauthController{
         })
         .then(result => {
             console.log("user ==>", result)
-            const token = generateToken({
-                id: result.id,
-                email: result.email
-            })
+            const token = jwtEncrypt({id: result.id})
+            res.status(200).json({message: "Login successful", access_token: token}) 
 
-            res.status(201).json({access_token: token})
+            // const token = generateToken({
+            //     id: result.id,
+            //     email: result.email
+            // })
+
+            // res.status(201).json({access_token: token})
         })
     }
 

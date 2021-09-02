@@ -11,7 +11,7 @@ router.get('/', handlerGetSlash)
 
 router.post('/email/sendactivation/:email', emailController.sendActivation)
 router.get('/email/activation', emailController.activatedAccount)
-router.get('/oauthgoogle/login-google', oauthController.loginGoogle)
+router.post('/oauthgoogle/login-google', oauthController.loginGoogle)
 
 // /ongkir
 router.get('/ongkir/province', ongkirController.getProvince)
